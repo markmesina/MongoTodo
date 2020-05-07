@@ -10,7 +10,7 @@ const UserSchema = new Schema({
     password:{
         type: String,
         required:[true, "Must provide a password"],
-        validate:[(value) => isLength(value,{ min:6}), "Your password must be at least 6 characters long" ],
+        validate:[(value) => isLength(value,{ min:6 }), "Your password must be at least 6 characters long" ],
     },
     dateCreated:{
         type: Date,
