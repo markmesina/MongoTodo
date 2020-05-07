@@ -14,5 +14,15 @@ module.exports = {
      if(!isLength(password, { min: 6 })) {
          return res.status(403).json({ error: 'Your password must at least be 6 characters long'});
      }
+
+     try {
+        const existingUser = await User.findOne({ email });
+        if(existingUser) { return res.status(401).json({ error: 'Email address already taken'})}
+        const user = await new User({email, password }).save();
+        return res.status(200).json(user);
+     } catch(e) {
+        return res.status(403).json({ e });
+     }
+
     },
 };
