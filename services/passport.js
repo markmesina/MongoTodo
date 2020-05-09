@@ -3,7 +3,7 @@ const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 
 const { secret } = require('./../config');
 
-const User = require('./../models/user');
+const User = require('../models/User');
 
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromHeader('authorization'),
