@@ -1,7 +1,7 @@
 const { isEmail, isLength } = require('validator');
 const jwt = require('jwt-simple');
 const { User } = require('./../models');
-const { sercret } = require('./../config');
+const { secret } = require('./../config');
 
 
 

@@ -11,6 +11,7 @@ const jwtOptions = {
 };
 
 const jwtAuth = new JwtStrategy(jwtOptions, async(payload,done) => {
+    //{ sub: user._id, iat: }
     try {
         const user = await User.findById(payload.sub);
         if (!user) {
@@ -21,5 +22,7 @@ const jwtAuth = new JwtStrategy(jwtOptions, async(payload,done) => {
         return done(e,false);
     }
 });
+
+
 
 passport.use(jwtAuth);

@@ -1,11 +1,12 @@
 const router = require('express').Router();
-const { addTodo, getAllUserEmails } = require('./../../../controllers/userController')
+const { addTodo, getAllUserEmails } = require('./../../../controllers/userController');
+const { requireAuth } = require('./../../../middlewares/authMiddleware');
 // /api/user prepended
 
 router.route('/todos')
-    .post(addTodo);
+    .post(requireAuth, addTodo);
 
-router.get('/emails', getAllUserEmails);
+router.get('/emails', requireAuth, getAllUserEmails);
 
 
 module.exports = router;

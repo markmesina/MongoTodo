@@ -1,5 +1,6 @@
 const { Schema, model }= require('mongoose');
 const { isEmail, isLength } = require('validator');
+const bcrypt = require('bcryptjs');
 const UserSchema = new Schema({
     email: {
         type: String,
@@ -19,5 +20,28 @@ const UserSchema = new Schema({
     todos: [ {type: Schema.Types.ObjectId, ref: 'Todo'} ]
 
 }); 
+
+
+UserSchema.pre('save', async function (next) {
+    const user = this;
+    let salt;
+    let hash;
+
+    if (user.isModified('password')) {
+        try {
+            salt = await bcrypt.genSalt();
+            hash = await bcrypt.hash(user.password, salt);
+        } catch (e) {
+            next(e);
+        }
+    }
+    console.log(salt);
+    console.log(hash);
+    // this will overwrite the plain text password wiht our hash
+    user.password = hash;
+    console.log(user.password)
+    //finally call save
+    next();
+});
 
 module.exports = model('User', UserSchema);
