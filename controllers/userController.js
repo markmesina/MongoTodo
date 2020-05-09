@@ -18,5 +18,12 @@ module.exports = {
         } catch (e) {
             return res.json(403).json({ e });
         }
-    }
+    },
+    getAllUserEmails: async (req, res) => {
+        try {
+          const userEmails = await User.find({}, 'email');
+          if (!userEmails) { return res.status(404).json({ error: 'No user emails found '});}
+          return res.status(200).json(userEmails);
+        } catch (e) { return res.status(403).json({ e }); }
+    },
 }
