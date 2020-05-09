@@ -4,7 +4,10 @@ const passport = require('passport');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 
+//tell passport to look for a 'local' strategy that we defined
+const requireSignIn = passport.authenticate('local', { session: false });
 module.exports = {
-    requireAuth
+    requireAuth,
+    requireSignIn
 }
 

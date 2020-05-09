@@ -39,4 +39,6 @@ module.exports = {
      }
 
     },
+
+    signin: (req,res) => res.status(200).json({ token: tokenForUser(req.user._id )}),
 };
