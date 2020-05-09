@@ -44,4 +44,18 @@ UserSchema.pre('save', async function (next) {
     next();
 });
 
+//candidatePassword is the password user provides upon sign up
+UserSchema.methods.comparePassword = async function(candidatePassword) {
+    const user = this;
+
+    try {
+        const isMatch = await bcrypt.compare(candidatePassword, user.password);
+        return Promise.resolve(isMatch);
+
+    } catch (e) {
+        return Promise.reject(e);
+    }
+
+};
+
 module.exports = model('User', UserSchema);
