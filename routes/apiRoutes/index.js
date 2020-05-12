@@ -7,11 +7,11 @@ const authRoutes = require('./authRoutes');
 const userRoutes = require('./userRoutes');
 
 //todo
-// const todosRoutes = require('./todosRoutes');
+const todoRoutes = require('./todoRoutes');
 
 router.use('/auth',authRoutes);
 router.use('/user',userRoutes);
-// router.use('/todos',todosRoutes);
+router.use('/todo',todoRoutes);
 
 
 module.exports = router;

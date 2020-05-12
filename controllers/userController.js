@@ -27,4 +27,11 @@ module.exports = {
           return res.status(200).json(userEmails);
         } catch (e) { return res.status(403).json({ e }); }
     },
+    getUserTodos: async (req,res) => {
+        try {
+            const userTodos = await User.find({},'todo' );
+            return res.status(200).json(userTodos);
+        } catch (e) { return res.status(403).json({ e });}
+        
+    },
 }
