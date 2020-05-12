@@ -24,25 +24,20 @@ const UserSchema = new Schema({
 
 UserSchema.pre('save', async function (next) {
     const user = this;
-    let salt;
-    let hash;
-
     if (user.isModified('password')) {
-        try {
-            salt = await bcrypt.genSalt();
-            hash = await bcrypt.hash(user.password, salt);
-        } catch (e) {
-            next(e);
-        }
+      try {
+        let salt = await bcrypt.genSalt();
+        let hash = await bcrypt.hash(user.password, salt);
+        user.password = hash;
+        // Finally call save
+        next();
+      } catch (e) {
+        next(e);
+      }
     }
-    console.log(salt);
-    console.log(hash);
-    // this will overwrite the plain text password wiht our hash
-    user.password = hash;
-    console.log(user.password)
-    //finally call save
     next();
-});
+  //  overwrite the plain text password with our hash
+  });
 
 //candidatePassword is the password user provides upon sign up
 UserSchema.methods.comparePassword = async function(candidatePassword) {
