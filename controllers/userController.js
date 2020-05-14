@@ -56,4 +56,26 @@ module.exports = {
         } catch (e) { return res.status(403).json({ e }); }
     },
     
+    updateTodoById: async (req,res) => {
+        const { todoId } = req.params;
+        const { text, completed } = req.body;
+        if(!text) {
+            return res.status(400).json({ error: 'You must provide a text' });
+        }
+        try {
+            const todoToUpdate = await Todo.findById(todoId);
+            if(!todoToUpdate) {
+                return res.status(404).json({ error: 'No Todo with that Id' });
+            }
+            if(req.user._id.toString() !== todoToUpdate.user.toString()) {
+                return res.status(401).json({ error: 'You cannot updatedelete a todo that is not yours!' });
+            }
+
+            const updatedTodo = await Todo.findByIdAndUpdate(todoId,
+                { completed, text },
+                { new: true });
+            return res.status(200).json(updatedTodo);
+        } catch (e) { return res.status(403).json({ e }); }
+    },
+    
 }

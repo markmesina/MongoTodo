@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { addTodo, getAllUserEmails, getUserTodos, deleteUserTodoById } = require('./../../../controllers/userController');
+const { addTodo, getAllUserEmails, getUserTodos, deleteUserTodoById, updateTodoById } = require('./../../../controllers/userController');
 const { requireAuth } = require('./../../../middlewares/authMiddleware');
 // /api/user prepended
 
@@ -10,7 +10,8 @@ router.route('/todo')
 router.get('/emails', requireAuth, getAllUserEmails);
 
 router.route('/todo/:todoId')
-  .delete(requireAuth, deleteUserTodoById);
+  .delete(requireAuth, deleteUserTodoById)
+  .put(requireAuth, updateTodoById)
 
 
 module.exports = router;
